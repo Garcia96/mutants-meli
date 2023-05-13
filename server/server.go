@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"errors"
 	"log"
 	"mutants-meli/internal/database"
@@ -8,6 +9,9 @@ import (
 	"mutants-meli/internal/models"
 	"mutants-meli/internal/repository"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gorilla/mux"
 )
@@ -17,7 +21,16 @@ func NewServer(config *models.Config) error {
 		return errors.New("port is required")
 	}
 	if config.Db_host == "" {
-		return errors.New("db_host is required")
+		return errors.New("db host is required")
+	}
+	if config.Db_user == "" {
+		return errors.New("user is required")
+	}
+	if config.Db_pass == "" {
+		return errors.New("password is required")
+	}
+	if config.Db_name == "" {
+		return errors.New("db name is required")
 	}
 
 	r := mux.NewRouter()
@@ -31,8 +44,18 @@ func NewServer(config *models.Config) error {
 	repository.SetRepository(repo)
 
 	server := http.Server{Addr: config.Server_port}
+
+	serverDoneChan := make(chan os.Signal, 1)
+	signal.Notify(serverDoneChan, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		err = server.ListenAndServe()
+	}()
 	log.Println("Starting server on port", config.Server_port)
-	err = server.ListenAndServe()
+	<-serverDoneChan
+
+	server.Shutdown(context.Background())
+	log.Println("Server stopped")
 
 	return err
 }

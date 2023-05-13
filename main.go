@@ -28,6 +28,4 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// s.Start(BindRoutes)
-
 }
