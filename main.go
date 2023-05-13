@@ -16,12 +16,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	server_port := os.Getenv("server_port")
-	user := os.Getenv("user")
-	pass := os.Getenv("pass")
-	host := os.Getenv("host")
+	server_port := os.Getenv("port")
+	user := os.Getenv("db_user")
+	pass := os.Getenv("db_pass")
+	host := os.Getenv("db_host")
 	db_name := os.Getenv("db_name")
-	port := os.Getenv("port")
+	port := os.Getenv("db_port")
 
 	err = server.NewServer(&models.Config{Server_port: server_port, Db_host: host, Db_name: db_name, Db_port: port, Db_user: user, Db_pass: pass})
 	if err != nil {
