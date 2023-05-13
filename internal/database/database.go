@@ -16,7 +16,7 @@ type DatabaseRepository struct {
 }
 
 func NewDatabaseRepository(config *models.Config) (*DatabaseRepository, error) {
-	var url = fmt.Sprintf("%s:%s@/%s", config.Db_user, config.Db_pass, config.Db_name)
+	var url = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", config.Db_user, config.Db_pass, config.Db_host, config.Db_port, config.Db_name)
 	db, err := sql.Open("mysql", url)
 	if err != nil {
 		return nil, err
