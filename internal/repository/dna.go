@@ -8,7 +8,6 @@ import (
 type DnaRepository interface {
 	GetAllDna(ctx context.Context) ([]*models.Dna, error)
 	InsertDna(ctx context.Context, dna *models.Dna) error
-	Close() error
 }
 
 var implementation DnaRepository
@@ -23,8 +22,4 @@ func InsertDna(ctx context.Context, dna *models.Dna) error {
 
 func GetAllDna(ctx context.Context) ([]*models.Dna, error) {
 	return implementation.GetAllDna(ctx)
-}
-
-func Close() error {
-	return implementation.Close()
 }

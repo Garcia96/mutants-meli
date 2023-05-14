@@ -1,0 +1,22 @@
+[
+  {
+    "id": "598fe6cb-9e6f-45ab-a6b3-947402338a47",
+    "dna_string": "[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAATG\",\"CCCTTA\",\"TCACTG\"]",
+    "is_mutant": false
+  },
+  {
+    "id": "bf238f86-6f08-45ad-94ee-880a8ed5e6db",
+    "dna_string": "[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]",
+    "is_mutant": true
+  },
+  {
+    "id": "ccc5980e-8486-4b9c-99db-721e948329c5",
+    "dna_string": "[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]",
+    "is_mutant": true
+  },
+  {
+    "id": "f7c12197-db28-4c3d-9a1b-f8ccc1073ba2",
+    "dna_string": "[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]",
+    "is_mutant": true
+  }
+]

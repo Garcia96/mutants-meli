@@ -13,5 +13,10 @@ type MutantRequest struct {
 type StatsResponse struct {
 	Count_mutant_dna int     `json:"count_mutant_dna"`
 	Count_human_dna  int     `json:"count_human_dna"`
-	Ratio            float32 `json:"ratio"`
+	Ratio            float64 `json:"ratio"`
+}
+
+type Response struct {
+	Message string `json:"message"`
+	Status  bool   `json:"status"`
 }

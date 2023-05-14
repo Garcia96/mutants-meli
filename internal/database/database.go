@@ -54,7 +54,3 @@ func (repo *DatabaseRepository) GetAllDna(ctx context.Context) ([]*models.Dna, e
 
 	return dnas, err
 }
-
-func (repo *DatabaseRepository) Close() error {
-	return repo.Db.Close()
-}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 
@@ -11,6 +12,24 @@ import (
 )
 
 func main() {
+	config := SetupServerConfig()
+
+	s, err := server.NewServer(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	server.BindRoutes()
+
+	log.Println("Starting server on port", config.Server_port)
+	err = s.ListenAndServe()
+	if err != nil {
+		s.Shutdown(context.Background())
+		log.Fatal(err)
+	}
+}
+
+func SetupServerConfig() *models.Config {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -23,9 +42,12 @@ func main() {
 	db_name := os.Getenv("db_name")
 	port := os.Getenv("db_port")
 
-	err = server.NewServer(&models.Config{Server_port: server_port, Db_host: host, Db_name: db_name, Db_port: port, Db_user: user, Db_pass: pass})
-	if err != nil {
-		log.Fatal(err)
+	return &models.Config{
+		Server_port: server_port,
+		Db_host:     host,
+		Db_name:     db_name,
+		Db_port:     port,
+		Db_user:     user,
+		Db_pass:     pass,
 	}
-
 }

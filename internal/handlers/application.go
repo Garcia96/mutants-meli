@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"mutants-meli/internal/models"
 	"net/http"
 	"strings"
@@ -13,7 +13,7 @@ import (
 func IsMutant(dna []string) (*models.Dna, int) {
 	bytes, err := json.Marshal(dna)
 	if err != nil {
-		panic(err)
+		log.Fatal(err.Error())
 	}
 	str := string(bytes)
 
@@ -119,36 +119,41 @@ func ValidateDna(dna []string) bool {
 	for _, str := range dna {
 		for _, char := range str {
 			if !strings.ContainsRune(allowedChars, char) {
-				return true
+				return false
 			}
 		}
 	}
 
-	return false
+	return true
 }
 
-func VerifyStats(dnas []*models.Dna) (models.StatsResponse, error) {
-	stats := models.StatsResponse{}
-
+func VerifyStats(dnas []*models.Dna) models.StatsResponse {
 	var count_mutant_dna, count_human_dna int
+	var stats models.StatsResponse
 	for _, dna := range dnas {
 		if dna.Is_mutant {
 			count_mutant_dna++
 		}
 	}
 
-	count_human_dna = len(dnas) - count_mutant_dna
+	count_human_dna = len(dnas)
 	if count_human_dna == 0 {
-		return stats, fmt.Errorf("cannot divide by zero")
+		stats = models.StatsResponse{
+			Count_mutant_dna: count_mutant_dna,
+			Count_human_dna:  count_human_dna,
+			Ratio:            0,
+		}
+		return stats
 	}
 
-	ratio := count_mutant_dna / count_human_dna
+	ratio := float64(count_mutant_dna) / float64(count_human_dna)
 
+	log.Println("RATIO en Verify", ratio)
 	stats = models.StatsResponse{
 		Count_mutant_dna: count_mutant_dna,
 		Count_human_dna:  count_human_dna,
-		Ratio:            float32(ratio),
+		Ratio:            ratio,
 	}
 
-	return stats, nil
+	return stats
 }
