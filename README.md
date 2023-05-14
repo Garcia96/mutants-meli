@@ -88,11 +88,9 @@ To build the project, run the following command
   go build
 ```
 
-## Live example
+## API URL
 
 You can test the API with postman or similar tool
-
-API URL
 
 - http://ec2-3-139-80-95.us-east-2.compute.amazonaws.com/
 
